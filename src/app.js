@@ -3,7 +3,7 @@
 
 var config = {
     type: Phaser.AUTO,
-    parent: 'main', //redireciona o palco do jogo para uma div
+    parent: 'stage', //redireciona o palco do jogo para uma div
     width: 800,
     height: 600,
     backgroundColor: '#2F4E7D',    
