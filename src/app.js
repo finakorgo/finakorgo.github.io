@@ -1,13 +1,12 @@
-
 //by José Aparecido Finamor - Phaser javascript
 
 var config = {
     type: Phaser.AUTO,
-    parent: 'stage', //redireciona o palco do jogo para uma div
+    parent: 'stage', //redireciona o palco do jogo para uma div  
     width: 800,
     height: 600,
-    backgroundColor: '#2F4E7D',    
-   
+    backgroundColor: '#2F4E7D',
+
     physics: {
         default: 'arcade',
         arcade: {
@@ -20,8 +19,8 @@ var config = {
     scene: {
         preload: preload,
         create: create,
-        update: update      
-        
+        update: update
+
     }
 };
 
@@ -38,12 +37,12 @@ var scoreText;
 var game = new Phaser.Game(config);
 
 function preload() {
-    
+
     this.load.audio('theme', [
         'assets/audio/bodenstaendig_2000_in_rock_4bit.ogg',
-        'assets/audio/bodenstaendig_2000_in_rock_4bit.mp3'       
+        'assets/audio/bodenstaendig_2000_in_rock_4bit.mp3'
     ]);
-    
+
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
@@ -52,16 +51,16 @@ function preload() {
         frameWidth: 32,
         frameHeight: 48
     });
-   
+
 }
 
 function create() {
     //  A simple background for our game
-    
+
     var music = this.sound.add('theme');
     music.play();
-   
-    
+
+
     this.add.image(400, 300, 'sky');
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
@@ -206,10 +205,18 @@ function collectStar(player, star) {
 function hitBomb(player, bomb) {
     this.physics.pause();
 
-    player.setTint(0xff0000);//cor do boneco se a bomba encostar
+    player.setTint(0xff0000); //cor do boneco se a bomba encostar
 
     player.anims.play('turn');
 
     gameOver = true;
-}
 
+    if (gameOver == true) {
+        var delay = 2000;
+        setTimeout(function () {
+            var sit = document.getElementById("pop");
+            sit.innerHTML = sit.innerHTML + "<button id='btr' type=''button' onclick = 'window.location.reload(true)'>Jogar novamente</button>";
+        }, delay);
+    }
+
+}
