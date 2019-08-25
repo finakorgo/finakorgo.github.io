@@ -2,9 +2,9 @@
 
 var config = {
     type: Phaser.AUTO,
-    parent: 'stage', //redireciona o palco do jogo para uma div  
+    parent: 'stage', //redireciona o palco do jogo para uma div
     width: 800,
-    height: 600,
+    height: 540,
     backgroundColor: '#2F4E7D',
 
     physics: {
