@@ -35,25 +35,26 @@ function preload() {
 function create() {
     this.add.image(400, 300, 'sky');
 
-    // Música
+    // Música (mantido)
     music = this.sound.add('theme', { loop: true, volume: 0.7 });
     this.sound.unlock();
 
-    // Score mais no topo
-    scoreText = this.add.text(16, 8, 'Score: 0', {
-        fontSize: '34px',
+    // ====================== SCORE NO CANTO SUPERIOR ESQUERDO ======================
+    scoreText = this.add.text(20, 12, 'Score: 0', {
+        fontSize: '36px',
         fill: '#ffff00',
-        stroke: '#000',
-        strokeThickness: 8
+        stroke: '#000000',
+        strokeThickness: 10,
+        fontFamily: 'Arial Black',
+        fontStyle: 'bold'
     });
 
-    // Pegar o botão que está no HTML
+    // Pegar o botão de música
     musicBtn = document.getElementById('musicBtn');
     
     if (musicBtn) {
         musicBtn.addEventListener('click', () => {
             if (!music) return;
-            
             if (music.isPlaying) {
                 music.pause();
                 musicBtn.textContent = '🎵 Ligar Música';
@@ -65,6 +66,8 @@ function create() {
             }
         });
     }
+
+    // ... (resto do código permanece igual)
 
     // ====================== PLATAFORMAS ======================
     platforms = this.physics.add.staticGroup();
