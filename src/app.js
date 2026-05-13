@@ -1,5 +1,6 @@
 // by José Aparecido Finamor - Versão Corrigida 2026
 // Starman - Versão Corrigida e Segura
+// Starman - Versão Corrigida e Segura
 const config = {
     type: Phaser.AUTO,
     parent: 'stage',
@@ -164,5 +165,4 @@ function hitBomb(player, bomb) {
                 Jogar Novamente
             </button>`;
     }, 1500);
-}
 }
