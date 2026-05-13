@@ -1,6 +1,6 @@
 // by José Aparecido Finamor - Versão Corrigida 2026
 // Starman - Versão Corrigida e Segura
-// Starman - Versão Corrigida e Segura
+// Starman - Versão sem sons externos (funciona mesmo sem collect.wav e explosion.wav)
 const config = {
     type: Phaser.AUTO,
     parent: 'stage',
@@ -18,15 +18,12 @@ let player, stars, bombs, platforms, cursors;
 let score = 0;
 let gameOver = false;
 let scoreText;
-let music, collectSound, explosionSound;
+let music = null;
 
 const game = new Phaser.Game(config);
 
 function preload() {
-    // Áudio (com fallback)
     this.load.audio('theme', 'assets/audio/bodenstaendig_2000_in_rock_4bit.mp3');
-    this.load.audio('collect', 'assets/audio/collect.wav');
-    this.load.audio('explosion', 'assets/audio/explosion.wav');
 
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
@@ -39,24 +36,12 @@ function preload() {
 }
 
 function create() {
-    // Background
     this.add.image(400, 300, 'sky');
 
-    // === ÁUDIO (com proteção) ===
-    music = this.sound.add('theme', { loop: true, volume: 0.6 });
-    
-    try {
-        collectSound = this.sound.add('collect', { volume: 0.9 });
-        explosionSound = this.sound.add('explosion', { volume: 0.9 });
-    } catch (e) {
-        console.warn("Sons não carregados");
-    }
-
-    // Toca música após interação do usuário
+    // Música de fundo
+    music = this.sound.add('theme', { loop: true, volume: 0.65 });
     this.sound.unlock();
-    this.input.once('pointerdown', () => {
-        if (music) music.play();
-    });
+    this.input.once('pointerdown', () => { if (music) music.play(); });
 
     // Plataformas
     platforms = this.physics.add.staticGroup();
@@ -127,9 +112,6 @@ function update() {
 function collectStar(player, star) {
     if (!star.active) return;
 
-    // Toca som apenas se existir
-    if (collectSound) collectSound.play();
-
     star.disableBody(true, true);
 
     score += 10;
@@ -140,7 +122,7 @@ function collectStar(player, star) {
             child.enableBody(true, child.x, 0, true, true);
         });
 
-        const x = player.x < 400 ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+        const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
         const bomb = bombs.create(x, 16, 'bomb');
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
@@ -151,9 +133,8 @@ function collectStar(player, star) {
 
 function hitBomb(player, bomb) {
     this.physics.pause();
-    if (explosionSound) explosionSound.play();
-
     player.setTint(0xff0000);
+    player.anims.play('turn');
     gameOver = true;
 
     this.cameras.main.fade(1500, 0, 0, 0);
