@@ -1,6 +1,6 @@
 // by José Aparecido Finamor - Versão Corrigida 2026
 // Starman - Versão Corrigida e Segura
-// Starman - Versão sem sons externos (funciona mesmo sem collect.wav e explosion.wav)
+// Starman - Versão Estável sem sons externos
 const config = {
     type: Phaser.AUTO,
     parent: 'stage',
@@ -29,19 +29,19 @@ function preload() {
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { 
-        frameWidth: 32, 
-        frameHeight: 48 
-    });
+    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
 }
 
 function create() {
     this.add.image(400, 300, 'sky');
 
-    // Música de fundo
+    // Música
     music = this.sound.add('theme', { loop: true, volume: 0.65 });
+
     this.sound.unlock();
-    this.input.once('pointerdown', () => { if (music) music.play(); });
+    this.input.once('pointerdown', () => {
+        if (music) music.play();
+    });
 
     // Plataformas
     platforms = this.physics.add.staticGroup();
@@ -111,7 +111,6 @@ function update() {
 
 function collectStar(player, star) {
     if (!star.active) return;
-
     star.disableBody(true, true);
 
     score += 10;
@@ -122,7 +121,7 @@ function collectStar(player, star) {
             child.enableBody(true, child.x, 0, true, true);
         });
 
-        const x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+        const x = player.x < 400 ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
         const bomb = bombs.create(x, 16, 'bomb');
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
@@ -134,9 +133,7 @@ function collectStar(player, star) {
 function hitBomb(player, bomb) {
     this.physics.pause();
     player.setTint(0xff0000);
-    player.anims.play('turn');
     gameOver = true;
-
     this.cameras.main.fade(1500, 0, 0, 0);
 
     setTimeout(() => {
