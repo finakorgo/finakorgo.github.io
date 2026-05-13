@@ -3,18 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="language" content="portuguese">
-  <meta name="author" content="José Aparecido Finamor">
   <title>Starman</title>
 
-  <!-- Materialize CSS (CDN) -->
+  <!-- Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
-  <!-- Seu CSS personalizado -->
+  <!-- Seu CSS -->
   <link rel="stylesheet" href="css/custom.css">
 
-  <!-- Scripts - Carregados na ordem correta -->
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
   <script src="lib/phaser.js"></script>
   <script src="src/app.js"></script>
@@ -25,36 +22,13 @@
       <nav>
         <div class="nav-wrapper row">
           <div class="loader col s1 push-s1">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
           </div>
           <div class="menu col s11 push-s6">
             <ul class="block-menu">
-              <li>
-                <a href="index.html" class="three-d">Home
-                  <span aria-hidden="true" class="three-d-box">
-                    <span class="front">Home</span>
-                    <span class="back">Home</span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="servicos.html" class="three-d">Serviços
-                  <span aria-hidden="true" class="three-d-box">
-                    <span class="front">Serviços</span>
-                    <span class="back">Serviços</span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="q-somos.html" class="three-d">Quem sou
-                  <span aria-hidden="true" class="three-d-box">
-                    <span class="front">Quem sou</span>
-                    <span class="back">Quem sou</span>
-                  </span>
-                </a>
-              </li>
+              <li><a href="../index.html" class="three-d">Home</a></li>
+              <li><a href="../servicos.html" class="three-d">Serviços</a></li>
+              <li><a href="../q-somos.html" class="three-d">Quem sou</a></li>
             </ul>
           </div>
         </div>
@@ -66,28 +40,22 @@
         <div class="container">
           <h5>Starman</h5>
           <p>Ajude o Starman a coletar as estrelas que cairam do céu!</p>
-          <p>Porém, tome cuidado, o celerado Bomberman está atirando bombas junto com as estrelas.</p>
+          <p>Porém, tome cuidado, o Bomberman está atirando bombas.</p>
         </div>
       </div>
     </main>
 
-    <section>
-      <div id="stage" style="margin: 0 auto; display: block;"></div>
+    <section style="text-align:center; margin: 20px 0;">
+      <div id="stage"></div>
       <div id="pop"></div>
     </section>
 
-    <article>
-      <div class="row">
-        <div class="container">
-          <h5>Instruções do jogo:</h5>
-          <p>Use as setas direcionais para mover o Starman e pular.</p>
-          <img src="assets/setas.png" alt="setas"> <br>
-          <em>Evite as bombas!</em>
-        </div>
-      </div>
+    <article class="container">
+      <h5>Instruções:</h5>
+      <p>Use as setas direcionais ← ↑ → para mover e pular.</p>
+      <img src="assets/setas.png" alt="setas" style="max-width:200px;">
+      <p><em>Evite as bombas!</em></p>
     </article>
-
-    <footer></footer>
   </div>
 </body>
 </html>
