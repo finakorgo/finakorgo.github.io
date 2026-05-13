@@ -40,14 +40,13 @@ function create() {
     this.sound.unlock();
 
     // ====================== SCORE NO CANTO SUPERIOR ESQUERDO ======================
-    scoreText = this.add.text(20, 12, 'Score: 0', {
-        fontSize: '36px',
-        fill: '#ffff00',
-        stroke: '#000000',
-        strokeThickness: 10,
-        fontFamily: 'Arial Black',
-        fontStyle: 'bold'
-    });
+   scoreText = this.add.text(20, 18, 'Score: 0', {
+    fontSize: '38px',
+    fill: '#ffff00',
+    stroke: '#000000',
+    strokeThickness: 12,
+    fontFamily: 'Arial Black'
+});
 
     // Pegar o botão de música
     musicBtn = document.getElementById('musicBtn');
