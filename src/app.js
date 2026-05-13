@@ -1,4 +1,5 @@
 // Starman - Versão com Botão de Música + Score ajustado by José Aparecido Finamor 
+// Starman - Versão Final com Botão no HTML
 const config = {
     type: Phaser.AUTO,
     parent: 'stage',
@@ -17,7 +18,7 @@ let score = 0;
 let gameOver = false;
 let scoreText;
 let music = null;
-let musicButton = null;
+let musicBtn = null;
 
 const game = new Phaser.Game(config);
 
@@ -34,23 +35,36 @@ function preload() {
 function create() {
     this.add.image(400, 300, 'sky');
 
-    // ====================== MÚSICA ======================
+    // Música
     music = this.sound.add('theme', { loop: true, volume: 0.7 });
-
     this.sound.unlock();
 
-    // ====================== UI ======================
-    // Score mais para cima
+    // Score mais no topo
     scoreText = this.add.text(16, 8, 'Score: 0', {
-        fontSize: '32px',
+        fontSize: '34px',
         fill: '#ffff00',
         stroke: '#000',
-        strokeThickness: 8,
-        fontFamily: 'Arial'
+        strokeThickness: 8
     });
 
-    // Botão de Música (usando DOM)
-    createMusicButton(this);
+    // Pegar o botão que está no HTML
+    musicBtn = document.getElementById('musicBtn');
+    
+    if (musicBtn) {
+        musicBtn.addEventListener('click', () => {
+            if (!music) return;
+            
+            if (music.isPlaying) {
+                music.pause();
+                musicBtn.textContent = '🎵 Ligar Música';
+                musicBtn.style.background = '#22d3ee';
+            } else {
+                music.play();
+                musicBtn.textContent = '⏸️ Pausar Música';
+                musicBtn.style.background = '#f87171';
+            }
+        });
+    }
 
     // ====================== PLATAFORMAS ======================
     platforms = this.physics.add.staticGroup();
@@ -59,7 +73,7 @@ function create() {
     platforms.create(50, 250, 'ground');
     platforms.create(750, 220, 'ground');
 
-    // ====================== JOGADOR ======================
+    // Jogador
     player = this.physics.add.sprite(100, 450, 'dude');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
@@ -77,9 +91,7 @@ function create() {
         setXY: { x: 12, y: 0, stepX: 70 }
     });
 
-    stars.children.iterate(child => {
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    });
+    stars.children.iterate(child => child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8)));
 
     bombs = this.physics.add.group();
 
@@ -89,45 +101,6 @@ function create() {
     this.physics.add.collider(bombs, platforms);
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     this.physics.add.overlap(player, stars, collectStar, null, this);
-}
-
-// Função para criar o botão de música
-function createMusicButton(scene) {
-    const buttonHTML = `
-        <button id="musicBtn" style="
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            padding: 10px 16px;
-            font-size: 16px;
-            background: #22d3ee;
-            color: #000;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            z-index: 100;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
-            🎵 Ligar Música
-        </button>`;
-
-    const stage = document.getElementById('stage');
-    stage.insertAdjacentHTML('beforebegin', buttonHTML);
-
-    const btn = document.getElementById('musicBtn');
-    
-    btn.addEventListener('click', () => {
-        if (music) {
-            if (music.isPlaying) {
-                music.pause();
-                btn.textContent = '🎵 Ligar Música';
-                btn.style.background = '#22d3ee';
-            } else {
-                music.play();
-                btn.textContent = '⏸️ Pausar Música';
-                btn.style.background = '#f87171';
-            }
-        }
-    });
 }
 
 function update() {
@@ -153,17 +126,15 @@ function update() {
     });
 }
 
+// Funções de coleta e game over (mesmas)
 function collectStar(player, star) {
     if (!star.active) return;
     star.disableBody(true, true);
-
     score += 10;
     scoreText.setText('Score: ' + score);
 
     if (stars.countActive(true) === 0) {
-        stars.children.iterate(child => {
-            child.enableBody(true, child.x, 0, true, true);
-        });
+        stars.children.iterate(child => child.enableBody(true, child.x, 0, true, true));
 
         const x = player.x < 400 ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
         const bomb = bombs.create(x, 16, 'bomb');
