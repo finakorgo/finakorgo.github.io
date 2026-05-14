@@ -40,7 +40,7 @@ function create() {
     this.sound.unlock();
 
     // ====================== SCORE NO CANTO SUPERIOR ESQUERDO ======================
-   scoreText = this.add.text(5, 18, 'Score: 0', {
+   scoreText = this.add.text(20, 1, 'Score: 0', {
     fontSize: '38px',
     fill: '#ffff00',
     stroke: '#000000',
