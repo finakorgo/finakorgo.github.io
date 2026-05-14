@@ -3,13 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starman</title>
+  <title>Starman - High Scores</title>
 
   <!-- Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
   <!-- Seu CSS -->
   <link rel="stylesheet" href="css/custom.css">
+
+  <style>
+    #game-container {
+        position: relative;
+        display: inline-block;
+        margin: 20px auto;
+    }
+    #externalScore {
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        padding: 10px 20px;
+        font-size: 24px;
+        font-weight: bold;
+        background: rgba(0, 0, 0, 0.7);
+        color: #ffff00;
+        border-radius: 10px;
+        z-index: 100;
+        font-family: 'Arial Black', sans-serif;
+        border: 2px solid #000;
+    }
+    #ranking-container {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f5f5f5;
+        border-radius: 10px;
+        border: 2px solid orange;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #ranking-list {
+        list-style: none;
+        padding: 0;
+    }
+    #ranking-list li {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+    }
+    #name-input-container {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    #player-name {
+        max-width: 200px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+    }
+  </style>
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -40,48 +93,48 @@
         <div class="container">
           <h5>Starman</h5>
           <p>Ajude o Starman a coletar as estrelas que cairam do céu!</p>
-          <p>Porém, tome cuidado, o Bomberman está atirando bombas.</p>
+          
+          <div id="name-input-container">
+            <label for="player-name" style="color: teal; font-weight: bold;">Digite seu nome para o Ranking:</label><br>
+            <input type="text" id="player-name" placeholder="Seu Nome" maxlength="15">
+          </div>
         </div>
       </div>
     </main>
 
-   <section style="text-align: center; margin: 20px 0; position: relative;">
-    <!-- Score Externo -->
-    <div id="externalScore" style="
-        position: absolute;
-        top: 10px;
-        left: 50px;
-        padding: 10px 20px;
-        font-size: 24px;
-        font-weight: bold;
-        background: rgba(0, 0, 0, 0.7);
-        color: #ffff00;
-        border-radius: 10px;
-        z-index: 100;
-        font-family: 'Arial Black', sans-serif;
-        border: 2px solid #000;">
-        Score: 0
+   <section style="text-align: center; margin: 20px 0;">
+    <div id="game-container">
+        <!-- Score Externo -->
+        <div id="externalScore">Score: 0</div>
+
+        <!-- Botão de Música -->
+        <button id="musicBtn" style="
+            position: absolute;
+            top: 10px;
+            right: 50px;
+            padding: 10px 18px;
+            font-size: 16px;
+            background: #22d3ee;
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);">
+            🎵 Ligar Música
+        </button>
+
+        <div id="stage"></div>
+        <div id="pop"></div>
     </div>
 
-    <!-- Botão de Música no HTML -->
-    <button id="musicBtn" style="
-        position: absolute;
-        top: 10px;
-        right: 50px;
-        padding: 10px 18px;
-        font-size: 16px;
-        background: #22d3ee;
-        color: #000;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        z-index: 100;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.4);">
-        🎵 Ligar Música
-    </button>
-
-    <div id="stage"></div>
-    <div id="pop"></div>
+    <!-- Ranking -->
+    <div id="ranking-container">
+        <h5 style="margin-top: 0;">🏆 Top 5 Ranking</h5>
+        <ul id="ranking-list">
+            <!-- Ranking será preenchido via JS -->
+        </ul>
+    </div>
 </section>
 
     <article class="container">
@@ -93,3 +146,4 @@
   </div>
 </body>
 </html>
+
