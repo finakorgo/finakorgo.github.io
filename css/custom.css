@@ -311,6 +311,11 @@ width: 200px;
 height: 40px;
 
 }
+
+#ranking-container {
+    margin-top: 0;
+}
+
 #btr {
 
     width: 200px;
