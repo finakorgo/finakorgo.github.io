@@ -1,99 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="language" content="portuguese">
-    <meta name="owner" content="José Aparecido Finamor">
-    <meta name="author" content="José Aparecido Finamor">
-    <meta name="reply-to" content="finakorgo@gmail.com">
-    <meta name="robots" content="all">
-    <meta name="googlebot" content="index, follow">
-    <meta name="audience" content="all">
-    <meta name="Classification" content="Business - Tecnology">
-    <meta name="designer" content="José Aparecido Finamor -> Web-Designer">
-    <meta name="url" content="https://finakorgo.github.io">
-    <meta name="identifier-URL" content="https://finakorgo.github.io">
-    <meta name="category" content="Tecnology, HTML 5 , CSS">
-    <meta name="coverage" content="Worldwide">
-    <meta name="distribution" content="Global">
-    <meta name="rating" content="General">
-    <meta name="DC.title" content="finakorgo">
-    <meta name="Title" content="finakorgo">
-    <meta name="format-detection" content="telephone=no">
-    <title>Main Concept</title>
-    <!--Links-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-    <link rel="stylesheet" href="css/custom.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starman</title>
 
-    <!--Scripts-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-    
-    
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+  <!-- Seu CSS -->
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="lib/phaser.js"></script>
+  <script src="src/app.js"></script>
 </head>
-
 <body>
-
-  <!--Menu-->
-    <nav>
+  <div class="master">
+    <header>
+      <nav>
         <div class="nav-wrapper row">
-            <div class="loader col s1 push-s1">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            
-             <div class="menu col s11 push-s6">
-                <ul class="block-menu">
-                    <li>
-                        <a href="index.html" class="three-d ">Home
-                                 <span aria-hidden="true" class="three-d-box">
-                                     <span class="front">Home</span>
-                                     <span class="back">Home</span>
-                                 </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="servicos.html" class="three-d">Serviços
-                                 <span aria-hidden="true" class="three-d-box">
-                                     <span class="front">Serviços</span>
-                                     <span class="back">Serviços</span>
-                                 </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="q-sou.html" class="three-d">Quem sou
-                                 <span aria-hidden="true" class="three-d-box">
-                                     <span class="front">Quem sou</span>
-                                     <span class="back">Quem sou</span>
-                                 </span>
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
+          <div class="loader col s1 push-s1">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="menu col s11 push-s6">
+            <ul class="block-menu">
+              <li><a href="../index.html" class="three-d">Home</a></li>
+              <li><a href="../servicos.html" class="three-d">Serviços</a></li>
+              <li><a href="../q-somos.html" class="three-d">Quem sou</a></li>
+            </ul>
+          </div>
         </div>
-    </nav>
-<!--/Menu-->
-<!--Section-->   
-    <section>
-        
-    </section>
-<!--/Section-->    
-    
-<!--Footer-->
-    <footer>
-        
-    </footer>
-<!--/footer-->
+      </nav>
+    </header>
 
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <main>
+      <div class="row">
+        <div class="container">
+          <h5>Starman</h5>
+          <p>Ajude o Starman a coletar as estrelas que cairam do céu!</p>
+          <p>Porém, tome cuidado, o Bomberman está atirando bombas.</p>
+        </div>
+      </div>
+    </main>
+
+   <section style="text-align: center; margin: 20px 0; position: relative;">
+    <!-- Botão de Música no HTML -->
+    <button id="musicBtn" style="
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        padding: 10px 18px;
+        font-size: 16px;
+        background: #22d3ee;
+        color: #000;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        z-index: 100;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.4);">
+        🎵 Ligar Música
+    </button>
+
+    <div id="stage"></div>
+    <div id="pop"></div>
+</section>
+
+    <article class="container">
+      <h5>Instruções do jogo:</h5>
+      <p>Use as setas ← ↑ → para mover e pular.</p>
+      <img src="assets/setas.png" alt="setas" style="max-width: 220px;">
+      <p><em>Evite as bombas!</em></p>
+    </article>
+  </div>
 </body>
-
 </html>
