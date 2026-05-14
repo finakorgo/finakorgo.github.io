@@ -1,5 +1,6 @@
 // Starman - Versão com Botão de Música + Score ajustado by José Aparecido Finamor 
 // Starman - Versão Final com Botão no HTML
+// Starman - Versão com Score Externo via DOM
 const config = {
     type: Phaser.AUTO,
     parent: 'stage',
@@ -16,7 +17,7 @@ const config = {
 let player, stars, bombs, platforms, cursors;
 let score = 0;
 let gameOver = false;
-let scoreText;
+let scoreElement; // Referência ao elemento HTML do score
 let music = null;
 let musicBtn = null;
 
@@ -24,7 +25,6 @@ const game = new Phaser.Game(config);
 
 function preload() {
     this.load.audio('theme', 'assets/audio/bodenstaendig_2000_in_rock_4bit.mp3');
-
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
@@ -35,22 +35,15 @@ function preload() {
 function create() {
     this.add.image(400, 300, 'sky');
 
-    // Música (mantido)
+    // Música
     music = this.sound.add('theme', { loop: true, volume: 0.7 });
     this.sound.unlock();
 
-    // ====================== SCORE NO CANTO SUPERIOR ESQUERDO ======================
-   scoreText = this.add.text(2, 10, 'Score: 0', {
-    fontSize: '38px',
-    fill: '#ffff00',
-    stroke: '#000000',
-    strokeThickness: 12,
-    fontFamily: 'Arial Black'
-});
+    // Pegar o elemento de score do HTML
+    scoreElement = document.getElementById('externalScore');
 
     // Pegar o botão de música
     musicBtn = document.getElementById('musicBtn');
-    
     if (musicBtn) {
         musicBtn.addEventListener('click', () => {
             if (!music) return;
@@ -66,9 +59,7 @@ function create() {
         });
     }
 
-    // ... (resto do código permanece igual)
-
-    // ====================== PLATAFORMAS ======================
+    // PLATAFORMAS
     platforms = this.physics.add.staticGroup();
     platforms.create(400, 568, 'ground').setScale(2).refreshBody();
     platforms.create(600, 400, 'ground');
@@ -128,12 +119,15 @@ function update() {
     });
 }
 
-// Funções de coleta e game over (mesmas)
 function collectStar(player, star) {
     if (!star.active) return;
     star.disableBody(true, true);
     score += 10;
-    scoreText.setText('Score: ' + score);
+    
+    // Atualizar o score via DOM
+    if (scoreElement) {
+        scoreElement.textContent = 'Score: ' + score;
+    }
 
     if (stars.countActive(true) === 0) {
         stars.children.iterate(child => child.enableBody(true, child.x, 0, true, true));
@@ -161,4 +155,3 @@ function hitBomb(player, bomb) {
             </button>`;
     }, 1500);
 }
-
