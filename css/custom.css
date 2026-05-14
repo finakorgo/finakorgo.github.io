@@ -232,7 +232,7 @@ section {
     }
     #externalScore {
         position: absolute;
-        top: 100px;
+        top: 30px;
         right: 50px;
         padding: 10px 20px;
         font-size: 24px;
