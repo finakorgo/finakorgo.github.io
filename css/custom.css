@@ -225,12 +225,7 @@ section {
   grid-area: s;
 }
 
-  #game-container {
-        position: relative;
-        display: inline-block;
-        margin: 20px auto;
-    }
-   
+
     #ranking-container {
         margin-top: 20px;
         padding: 20px;
