@@ -1,6 +1,5 @@
 // Starman - Versão com Botão de Música + Score ajustado by José Aparecido Finamor 
-// Starman - Versão Final com Botão no HTML
-// Starman - Versão com Score Externo via DOM
+// Starman - Versão Final com Ranking e Nome de Usuário
 const config = {
     type: Phaser.AUTO,
     parent: 'stage',
@@ -17,7 +16,7 @@ const config = {
 let player, stars, bombs, platforms, cursors;
 let score = 0;
 let gameOver = false;
-let scoreElement; // Referência ao elemento HTML do score
+let scoreElement;
 let music = null;
 let musicBtn = null;
 
@@ -39,11 +38,13 @@ function create() {
     music = this.sound.add('theme', { loop: true, volume: 0.7 });
     this.sound.unlock();
 
-    // Pegar o elemento de score do HTML
+    // Elementos DOM
     scoreElement = document.getElementById('externalScore');
-
-    // Pegar o botão de música
     musicBtn = document.getElementById('musicBtn');
+    
+    // Inicializar Ranking
+    updateRankingDisplay();
+
     if (musicBtn) {
         musicBtn.addEventListener('click', () => {
             if (!music) return;
@@ -124,7 +125,6 @@ function collectStar(player, star) {
     star.disableBody(true, true);
     score += 10;
     
-    // Atualizar o score via DOM
     if (scoreElement) {
         scoreElement.textContent = 'Score: ' + score;
     }
@@ -145,6 +145,10 @@ function hitBomb(player, bomb) {
     this.physics.pause();
     player.setTint(0xff0000);
     gameOver = true;
+    
+    // Salvar Score no Ranking
+    saveScore();
+
     this.cameras.main.fade(1500, 0, 0, 0);
 
     setTimeout(() => {
@@ -155,3 +159,32 @@ function hitBomb(player, bomb) {
             </button>`;
     }, 1500);
 }
+
+// Lógica de Ranking
+function saveScore() {
+    const playerNameInput = document.getElementById('player-name');
+    const playerName = playerNameInput.value.trim() || 'Anônimo';
+    
+    let highScores = JSON.parse(localStorage.getItem('starmanHighScores')) || [];
+    
+    highScores.push({ name: playerName, score: score });
+    
+    // Ordenar por score (maior para menor) e pegar os top 5
+    highScores.sort((a, b) => b.score - a.score);
+    highScores = highScores.slice(0, 5);
+    
+    localStorage.setItem('starmanHighScores', JSON.stringify(highScores));
+    updateRankingDisplay();
+}
+
+function updateRankingDisplay() {
+    const rankingList = document.getElementById('ranking-list');
+    if (!rankingList) return;
+    
+    const highScores = JSON.parse(localStorage.getItem('starmanHighScores')) || [];
+    
+    rankingList.innerHTML = highScores.length > 0 
+        ? highScores.map((entry, index) => `<li><span>${index + 1}. ${entry.name}</span> <span>${entry.score} pts</span></li>`).join('')
+        : '<li style="justify-content: center;">Nenhum recorde ainda!</li>';
+}
+
